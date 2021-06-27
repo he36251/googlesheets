@@ -39,7 +39,7 @@ export async function getStaticPaths() {
 
     // Get the paths we want to pre-render based on posts
     const paths = posts.map((post, i) => ({
-        params: { id: `${i + 1}` },
+        params: { id: `${i + 2}` },
     }))
 
     // We'll pre-render only these paths at build time.
