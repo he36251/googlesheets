@@ -1,11 +1,11 @@
-import { google } from 'googleapis';
+import {google} from 'googleapis';
 import Link from 'next/link';
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
 
-    const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'] });
+    const auth = await google.auth.getClient({scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly']});
 
-    const sheets = google.sheets({ version: 'v4', auth });
+    const sheets = google.sheets({version: 'v4', auth});
 
     const response = await sheets.spreadsheets.values.get({
         spreadsheetId: process.env.SHEET_ID,
@@ -19,10 +19,12 @@ export async function getServerSideProps() {
         props: {
             posts,
         },
+
+        revalidate: process.env.REVALIDATE
     };
 }
 
-export default function Post({ posts }) {
+export default function Post({posts}) {
     return (
         <article>
             <h1>Posts</h1>
